@@ -1,0 +1,46 @@
+# borg2backup.sh - example configuration file
+
+# Global options
+options:
+
+  # Where log messages should be sent; defaults to stdout
+  #log_output: 'borg2backup.log'
+
+# Backup sources
+sources:
+
+  # An array of directories or glob patterns; each directory will be backed up
+  # to a repo called '<dirname>.repo'; when using globs, a repo will be created
+  # for each match
+  directory:
+    - '/home/bob'
+    - '/usr/local/*'
+
+# Borg end points
+targets:
+
+  # Each target has an arbitrary name
+  rsync_net:
+
+    # Username, host and port connection details; port defaults to standard ssh
+    user: bob
+    host: rsync.net
+
+    # root defines the prefix of all repos (so, 'borg/dirname.repo'); defaults to /
+    root: borg
+
+    # Passphrase, used to create new repos automagically
+    passphrase: CorrectHorseBatteryStaple
+
+    # Keep schedule; if any specfied, archives will be pruned according to the
+    # provided parameters
+    keep:
+      daily: 7
+      weekly: 4
+      monthly: 12
+
+  # The full sources list will be backed up to all defined targets
+  hetzner:
+    user: us_bob
+    host: storagebox.de
+    port: 23
